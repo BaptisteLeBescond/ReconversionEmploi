@@ -2,7 +2,8 @@
 
 namespace NotificationBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller
+use NotificationBundle\Entity\Notification;
 
 class NotificationController extends Controller
 {
@@ -10,4 +11,9 @@ class NotificationController extends Controller
     {
         return $this->render('NotificationBundle:Notification:index.html.twig');
     }
+	
+	public function ListeNotificationAction(){
+		
+		
+	}
 }
