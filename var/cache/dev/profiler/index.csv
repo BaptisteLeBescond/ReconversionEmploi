@@ -1,20 +1,15 @@
-a83e5a,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/hello/world,1455871377,783429,200
-783429,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/hello/world,1455871377,,404
-bb824c,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455871383,,200
-03eb11,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455871622,,200
-<<<<<<< HEAD
-260ac1,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455872791,,200
-be560c,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455873175,,200
-914590,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455873194,,200
-8ec0ce,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455873194,,200
-bc7887,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455873544,,200
-8a25b4,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455873545,,200
-=======
-5d45ae,::1,GET,http://localhost/ReconversionEmploi/web/app_dev.php/,1455872869,,200
-<<<<<<< HEAD
-40e75c,::1,GET,http://localhost/ReconversionEmploi/web/app_dev.php/,1455874449,,200
-b24f1f,::1,GET,http://localhost/ReconversionEmploi/web/app_dev.php/,1455874530,,200
-f604d4,::1,GET,http://localhost/ReconversionEmploi/web/app_dev.php/notification,1455874536,,200
-=======
->>>>>>> origin/master
->>>>>>> origin/master
+43acae,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/login,1455877408,,200
+d133cd,127.0.0.1,POST,http://localhost:8080/ReconversionEmploi/web/app_dev.php/login_check,1455877412,,302
+62ac3a,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/login,1455877412,,200
+72bfda,127.0.0.1,POST,http://localhost:8080/ReconversionEmploi/web/app_dev.php/login_check,1455877587,,302
+e082bf,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455877588,,200
+19d6cd,127.0.0.1,POST,http://localhost:8080/ReconversionEmploi/web/app_dev.php/login_check,1455877665,,302
+813e59,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/login,1455877665,,200
+161bdf,127.0.0.1,POST,http://localhost:8080/ReconversionEmploi/web/app_dev.php/login_check,1455877671,,302
+e90117,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455877671,,200
+d605a9,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/register,1455877682,,301
+640718,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/register/,1455877683,,200
+7f3f69,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/logout,1455877687,,302
+b0674f,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/,1455877688,,200
+361c73,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/register,1455877692,,301
+a94363,127.0.0.1,GET,http://localhost:8080/ReconversionEmploi/web/app_dev.php/register/,1455877692,,200
