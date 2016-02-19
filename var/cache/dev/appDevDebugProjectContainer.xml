@@ -17,7 +17,11 @@
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="AppBundle">AppBundle\AppBundle</parameter>
       <parameter key="PlatformBundle">PlatformBundle\PlatformBundle</parameter>
+<<<<<<< HEAD
       <parameter key="MessagerieBundle">MessagerieBundle\MessagerieBundle</parameter>
+=======
+      <parameter key="BibliBundle">BibliBundle\BibliBundle</parameter>
+>>>>>>> origin/master
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -1489,7 +1493,11 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
+<<<<<<< HEAD
             <argument>56c6e08848ed37.07991787</argument>
+=======
+            <argument>56c6dfbe63bfb4.41876923</argument>
+>>>>>>> origin/master
           </service>
         </argument>
       </argument>
@@ -1618,7 +1626,11 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
+<<<<<<< HEAD
             <argument>56c6e08848ed37.07991787</argument>
+=======
+            <argument>56c6dfbe63bfb4.41876923</argument>
+>>>>>>> origin/master
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2409,8 +2421,13 @@
         <argument>Platform</argument>
       </call>
       <call method="addPath">
+<<<<<<< HEAD
         <argument>C:\Program Files (x86)\Ampps\www\ReconversionEmploi\src\MessagerieBundle/Resources/views</argument>
         <argument>Messagerie</argument>
+=======
+        <argument>C:\Program Files (x86)\Ampps\www\ReconversionEmploi\src\BibliBundle/Resources/views</argument>
+        <argument>Bibli</argument>
+>>>>>>> origin/master
       </call>
       <call method="addPath">
         <argument>C:\Program Files (x86)\Ampps\www\ReconversionEmploi\vendor\symfony\symfony\src\Symfony\Bundle\DebugBundle/Resources/views</argument>
