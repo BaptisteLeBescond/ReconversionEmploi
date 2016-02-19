@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<table>
+		<thead>
+			<th>Rubrique</th>
+			<th>Document</th>
+			<th>Description</th>
+			<th>État</th>
+			<th>Version</th>
+			<th>Commentaire</th>
+		</thead>
+		<tbody>
+			{% for d in documents %}
+
+				<tr>
+					<td>{{ d.rubrique }}</td>
+					<td>{{ d.titre }}</td>
+					<td>{{ d.description }}</td>
+					<td>{{ d.etat }}</td>
+					<td>V{{ d.version }}</td>
+					<td><!-- <a href="{{ path('bibli_bundle_commentaire_ajouter', { 'id': d.id }) }}">Commentaire</a> --></td>
+				</tr>
+
+			{% else %}
+
+				<tr>
+					<td>Aucune ordonnance n'a été trouvée.</td>
+				</tr>
+
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}
