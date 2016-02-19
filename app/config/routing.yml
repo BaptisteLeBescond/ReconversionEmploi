@@ -1,3 +1,7 @@
+bibli:
+    resource: "@BibliBundle/Resources/config/routing.yml"
+    prefix:   /
+
 platform:
     resource: "@PlatformBundle/Resources/config/routing.yml"
     prefix:   /
