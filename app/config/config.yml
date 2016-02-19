@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@PlatformBundle/Resources/config/services.yml" }
+    - { resource: "@MessagerieBundle/Resources/config/services.yml" }
     - { resource: "@BibliBundle/Resources/config/services.yml" }
     - { resource: "@NotificationBundle/Resources/config/services.yml" }
 
