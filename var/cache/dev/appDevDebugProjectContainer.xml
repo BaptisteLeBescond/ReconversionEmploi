@@ -17,7 +17,19 @@
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="AppBundle">AppBundle\AppBundle</parameter>
       <parameter key="PlatformBundle">PlatformBundle\PlatformBundle</parameter>
+<<<<<<< HEAD
       <parameter key="BibliBundle">BibliBundle\BibliBundle</parameter>
+=======
+<<<<<<< HEAD
+      <parameter key="MessagerieBundle">MessagerieBundle\MessagerieBundle</parameter>
+=======
+      <parameter key="BibliBundle">BibliBundle\BibliBundle</parameter>
+<<<<<<< HEAD
+      <parameter key="NotificationBundle">NotificationBundle\NotificationBundle</parameter>
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
+>>>>>>> origin/master
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -25,7 +37,11 @@
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
     <parameter key="kernel.container_class">appDevDebugProjectContainer</parameter>
+<<<<<<< HEAD
     <parameter key="database_host">localhost</parameter>
+=======
+    <parameter key="database_host">127.0.0.1</parameter>
+>>>>>>> origin/master
     <parameter key="database_port">null</parameter>
     <parameter key="database_name">reconversion</parameter>
     <parameter key="database_user">root</parameter>
@@ -1489,7 +1505,19 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
+<<<<<<< HEAD
             <argument>56c6e3adb9a582.21126051</argument>
+=======
+<<<<<<< HEAD
+            <argument>56c6e44e89c067.58732259</argument>
+=======
+<<<<<<< HEAD
+            <argument>56c6e08848ed37.07991787</argument>
+=======
+            <argument>56c6dfbe63bfb4.41876923</argument>
+>>>>>>> origin/master
+>>>>>>> origin/master
+>>>>>>> origin/master
           </service>
         </argument>
       </argument>
@@ -1618,7 +1646,19 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
+<<<<<<< HEAD
             <argument>56c6e3adb9a582.21126051</argument>
+=======
+<<<<<<< HEAD
+            <argument>56c6e44e89c067.58732259</argument>
+=======
+<<<<<<< HEAD
+            <argument>56c6e08848ed37.07991787</argument>
+=======
+            <argument>56c6dfbe63bfb4.41876923</argument>
+>>>>>>> origin/master
+>>>>>>> origin/master
+>>>>>>> origin/master
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -1916,7 +1956,11 @@
     <service id="doctrine.dbal.default_connection" class="Doctrine\DBAL\Connection">
       <argument type="collection">
         <argument key="driver">pdo_mysql</argument>
+<<<<<<< HEAD
         <argument key="host">localhost</argument>
+=======
+        <argument key="host">127.0.0.1</argument>
+>>>>>>> origin/master
         <argument key="port">null</argument>
         <argument key="dbname">reconversion</argument>
         <argument key="user">root</argument>
@@ -2409,8 +2453,22 @@
         <argument>Platform</argument>
       </call>
       <call method="addPath">
+<<<<<<< HEAD
         <argument>C:\Program Files (x86)\Ampps\www\ReconversionEmploi\src\BibliBundle/Resources/views</argument>
         <argument>Bibli</argument>
+=======
+<<<<<<< HEAD
+        <argument>C:\Program Files (x86)\Ampps\www\ReconversionEmploi\src\MessagerieBundle/Resources/views</argument>
+        <argument>Messagerie</argument>
+=======
+        <argument>C:\Program Files (x86)\Ampps\www\ReconversionEmploi\src\BibliBundle/Resources/views</argument>
+        <argument>Bibli</argument>
+>>>>>>> origin/master
+      </call>
+      <call method="addPath">
+        <argument>C:\Program Files (x86)\Ampps\www\ReconversionEmploi\src\NotificationBundle/Resources/views</argument>
+        <argument>Notification</argument>
+>>>>>>> origin/master
       </call>
       <call method="addPath">
         <argument>C:\Program Files (x86)\Ampps\www\ReconversionEmploi\vendor\symfony\symfony\src\Symfony\Bundle\DebugBundle/Resources/views</argument>

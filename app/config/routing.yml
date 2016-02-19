@@ -1,3 +1,10 @@
+messagerie:
+    resource: "@MessagerieBundle/Resources/config/routing.yml"
+
+notification:
+    resource: "@NotificationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bibli:
     resource: "@BibliBundle/Resources/config/routing.yml"
     prefix:   /

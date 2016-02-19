@@ -100,6 +100,20 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        // notification_homepage
+        if ($pathinfo === '/notification') {
+            return array (  '_controller' => 'NotificationBundle\\Controller\\NotificationController::indexAction',  '_route' => 'notification_homepage',);
+        }
+
+        // bibli_homepage
+        if (rtrim($pathinfo, '/') === '') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'bibli_homepage');
+            }
+
+            return array (  '_controller' => 'BibliBundle\\Controller\\DefaultController::indexAction',  '_route' => 'bibli_homepage',);
+        }
+
         // platform_homepage
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
