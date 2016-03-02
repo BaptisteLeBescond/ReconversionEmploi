@@ -50,7 +50,7 @@ Procédure Symfony (créer une page) :
   Tout d'abord, essayons de travailler chacun sur son Bundle. Si quelqu'un à besoin d'intervenir sur un autre Bundle (par exemple Jennifer avec les notifications), prévenez tout le monde (sur slack par exemple) pour éviter d'écraser les modifications des autres.
 
   Le fichier base.html.twig
-  -------------------------
+  -------------------------------------------------
     Sachez que toutes les pages du site auront des parties de code html identiques. Le DOCTYPE, le charset, les <link> CSS, les <script> JS, les balises <html> et <body>, le menu du haut (même s'il change en fonction du user.groups), le bouton "connexion/déconnexion", la date et heure, le footer, etc...
     Pour se simplifier la vie, tout ce code qu'on va retrouver dans toutes les pages sera dans le fichier "app/Resources/views/base.html.twig".
 
