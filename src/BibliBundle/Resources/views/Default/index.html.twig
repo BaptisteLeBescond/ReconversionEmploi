@@ -1,1 +1,40 @@
-Hello World!
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<table>
+		<thead>
+			<th>Rubrique</th>
+			<th>Document</th>
+			<th>Description</th>
+			<th>État</th>
+			<th>Version</th>
+			<th>Commentaire</th>
+		</thead>
+		<tbody>
+			{% for d in documents %}
+
+				<tr>
+					<td>{{ d.rubrique }}</td>
+					<td>{{ d.titre }}</td>
+					<td>{{ d.description }}</td>
+					{% if d.etat == 1 %}
+						<td>Télécharger</td>
+					{% elseif d.etat == 2 %}
+						<td>Déposer votre document</td>
+					{% endif %}
+					<td><a href="{{ path('document_download', { 'filename': d.path }) }}" target="_blank">V{{ d.version }}</a></td>
+					<td>Commenter</td>
+				</tr>
+
+			{% else %}
+
+				<tr>
+					<td></td>
+				</tr>
+
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

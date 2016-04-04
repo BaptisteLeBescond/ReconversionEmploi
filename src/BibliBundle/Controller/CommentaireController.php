@@ -13,7 +13,7 @@ class CommentaireController extends Controller
 
 		$commentaires = $em->getRepository('BibliBundle:Commentaire')->findAll();
 
-		return $this->container->get('templating')->renderResponse('BibliBundle:bibliotheque.html.twig', 
+		return $this->container->get('templating')->renderResponse('BibliBundle:Default:index.html.twig', 
 			array(
 				'commentaires' => $commentaires
 		 	));

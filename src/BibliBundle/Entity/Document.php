@@ -58,9 +58,16 @@ class Document
 
     /**
     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\JoinColumn(nullable=true)
     */
     private $candidat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255)
+     */
+    private $path;
 
     /**
      * Get id
@@ -190,6 +197,54 @@ class Document
     public function getVersion()
     {
         return $this->version;
+    }
+
+    /**
+     * Set candidat
+     *
+     * @param integer $candidat
+     *
+     * @return Document
+     */
+    public function setCandidat($candidat)
+    {
+        $this->candidat = $candidat;
+    
+        return $this;
+    }
+
+    /**
+     * Get candidat
+     *
+     * @return integer
+     */
+    public function getCandidat()
+    {
+        return $this->candidat;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $rubrique
+     *
+     * @return Document
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 }
 
