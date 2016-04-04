@@ -624,28 +624,4 @@ class User extends BaseUser
     {
         return $this->conseiller;
     }
-
-    /**
-     * Set naissance
-     *
-     * @param \DateTime $naissance
-     *
-     * @return User
-     */
-    public function setNaissance($naissance)
-    {
-        $this->naissance = $naissance;
-
-        return $this;
-    }
-
-    /**
-     * Get naissance
-     *
-     * @return \DateTime
-     */
-    public function getNaissance()
-    {
-        return $this->naissance;
-    }
 }
