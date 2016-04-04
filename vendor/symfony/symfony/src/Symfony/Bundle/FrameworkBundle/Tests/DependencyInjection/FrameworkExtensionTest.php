@@ -428,6 +428,17 @@ abstract class FrameworkExtensionTest extends TestCase
         $this->assertEquals(new Reference('serializer.name_converter.camel_case_to_snake_case'), $container->getDefinition('serializer.normalizer.object')->getArgument(1));
     }
 
+    public function testObjectNormalizerRegistered()
+    {
+        $container = $this->createContainerFromFile('full');
+
+        $definition = $container->getDefinition('serializer.normalizer.object');
+        $tag = $definition->getTag('serializer.normalizer');
+
+        $this->assertEquals('Symfony\Component\Serializer\Normalizer\ObjectNormalizer', $definition->getClass());
+        $this->assertEquals(-1000, $tag[0]['priority']);
+    }
+
     public function testAssetHelperWhenAssetsAreEnabled()
     {
         $container = $this->createContainerFromFile('full');
@@ -436,12 +447,19 @@ abstract class FrameworkExtensionTest extends TestCase
         $this->assertSame('assets.packages', (string) $packages);
     }
 
-    public function testAssetHelperWhenTemplatesAreEnabledAndAssetsAreDisabled()
+    public function testAssetHelperWhenTemplatesAreEnabledAndNoAssetsConfiguration()
     {
-        $container = $this->createContainerFromFile('full');
+        $container = $this->createContainerFromFile('templating_no_assets');
         $packages = $container->getDefinition('templating.helper.assets')->getArgument(0);
 
         $this->assertSame('assets.packages', (string) $packages);
+    }
+
+    public function testAssetsHelperIsRemovedWhenPhpTemplatingEngineIsEnabledAndAssetsAreDisabled()
+    {
+        $container = $this->createContainerFromFile('templating_php_assets_disabled');
+
+        $this->assertTrue(!$container->has('templating.helper.assets'), 'The templating.helper.assets helper service is removed when assets are disabled.');
     }
 
     public function testAssetHelperWhenAssetsAndTemplatesAreDisabled()

@@ -547,7 +547,11 @@ class FrameworkExtension extends Extension
                 'Symfony\\Bundle\\FrameworkBundle\\Templating\\Loader\\FilesystemLoader',
             ));
 
-            $container->getDefinition('templating.helper.assets')->replaceArgument(0, new Reference('assets.packages'));
+            if ($container->has('assets.packages')) {
+                $container->getDefinition('templating.helper.assets')->replaceArgument(0, new Reference('assets.packages'));
+            } else {
+                $container->removeDefinition('templating.helper.assets');
+            }
         }
     }
 
@@ -705,9 +709,8 @@ class FrameworkExtension extends Extension
                 ->in($dirs)
             ;
 
-            $locales = array();
             foreach ($finder as $file) {
-                list($domain, $locale, $format) = explode('.', $file->getBasename(), 3);
+                list(, $locale) = explode('.', $file->getBasename(), 3);
                 if (!isset($files[$locale])) {
                     $files[$locale] = array();
                 }

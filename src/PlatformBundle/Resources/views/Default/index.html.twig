@@ -1,1 +1,10 @@
-Hello World!
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Bonjour
+{% endblock %}
+
+
+{% block body %}
+	Hello {{ user.username }}
+{% endblock %}
