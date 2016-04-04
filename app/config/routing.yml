@@ -1,21 +1,18 @@
-user:
-    resource: "@UserBundle/Resources/config/routing.yml"
+platform:
+    resource: "@PlatformBundle/Resources/config/routing.yml"
     prefix:   /
 
 messagerie:
     resource: "@MessagerieBundle/Resources/config/routing.yml"
+    prefix:   /messagerie
 
 notification:
     resource: "@NotificationBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /notification
 
 bibli:
     resource: "@BibliBundle/Resources/config/routing.yml"
-    prefix:   /
-
-platform:
-    resource: "@PlatformBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /bibliotheque
 
 app:
     resource: "@AppBundle/Controller/"
