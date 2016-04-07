@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BibliBundle\Entity\Document;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 class DocumentController extends Controller
 {
@@ -25,8 +29,13 @@ class DocumentController extends Controller
     	//$schema = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 		//$webBaseDocsPath = $schema . $_SERVER["SERVER_NAME"] . '/ReconversionEmploi/web/documents/originaux/';
 
-    	$usersDocsPath = $_SERVER["DOCUMENT_ROOT"] . '/ReconversionEmploi/web/documents/users/';
-	    $content = file_get_contents($usersDocsPath . $filename);
+    	$baseDocsPath = $this->getDocsPath();
+		$usersDocsPath = $this->getDocsPath('users');
+
+    	if ( file_exists($usersDocsPath . $filename) )
+	    	$content = file_get_contents($usersDocsPath . $filename);
+	    else
+	    	$content = file_get_contents($baseDocsPath . $filename);
 
 	    $response = new Response();
 	    $response->headers->set(
@@ -40,10 +49,50 @@ class DocumentController extends Controller
     	$document = $em->getRepository('BibliBundle:Document')->findOneBy(
 			array('path' => $filename, 'candidat' => $this->getUser())
 		);
-		$document->setEtat(2);
-    	$em->flush();
+		if ( $document->getEtat() < 2 ) {
+			$document->setEtat(2);
+    		$em->flush();
+		}
 
 	    return $response;
+    }
+
+    public function uploadAction($document_id)
+    {
+    	if ($_FILES['file']['error'] > 0)
+
+    		return;
+
+    	else {
+
+    		$em = $this->container->get('doctrine')->getEntityManager();
+	    	$document = $em->getRepository('BibliBundle:Document')->findOneBy(
+				array('id' => $document_id, 'candidat' => $this->getUser())
+			);
+
+			if ( count($document) > 0) {
+
+				if ( move_uploaded_file($_FILES['file']['tmp_name'], $this->getDocsPath('users') . $document->getPath()) ) {
+
+					if ( $document->getEtat() < 3 )
+						$document->setEtat(3);
+					$version = $document->getVersion();
+					$document->setVersion($version += 1);
+					$em->flush();
+
+					return "YEAH";
+				}
+				else {
+					return;
+				}
+
+			} else {
+
+				return;
+			}
+    	}
+
+    	return var_dump($_FILES['file']);
     }
 
     private function getUserDocuments() {
@@ -66,7 +115,6 @@ class DocumentController extends Controller
 
 			return $userDocuments;
 		}
-
     }
 
     private function createUserDocuments($em) {
@@ -74,8 +122,8 @@ class DocumentController extends Controller
     	$baseDocuments = $em->getRepository('BibliBundle:Document')->findBy(
 			array('candidat' => null)
 		);
-		$baseDocsPath = $_SERVER["DOCUMENT_ROOT"] . '/ReconversionEmploi/web/documents/originaux/';
-		$usersDocsPath = $_SERVER["DOCUMENT_ROOT"] . '/ReconversionEmploi/web/documents/users/';
+		$baseDocsPath = $this->getDocsPath();
+		$usersDocsPath = $this->getDocsPath('users');
 		$fs = new Filesystem();
 
 		foreach ( $baseDocuments as $bd ) {
@@ -92,5 +140,12 @@ class DocumentController extends Controller
     		$em->flush();
 			$fs->copy($baseDocsPath . $bd->getPath(), $usersDocsPath . $filename);
 		}
+    }
+
+    private function getDocsPath($directory = null) {
+    	if ( $directory == 'users' )
+    		return $_SERVER["DOCUMENT_ROOT"] . 'ReconversionEmploi/web/documents/users/';
+    	else
+    		return $_SERVER["DOCUMENT_ROOT"] . 'ReconversionEmploi/web/documents/originaux/';
     }
 }
