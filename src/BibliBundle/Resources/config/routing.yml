@@ -1,11 +1,7 @@
 bibli_homepage:
-    path:     /
+    path:     /bibliotheque
     defaults: { _controller: BibliBundle:Document:index }
 
 document_download:
     path:    /download/{filename}
     defaults: { _controller: BibliBundle:Document:download }
-
-document_upload:
-    path:    /upload/{document_id}
-    defaults: { _controller: BibliBundle:Document:upload }

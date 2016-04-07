@@ -18,26 +18,12 @@
 					<td>{{ d.rubrique }}</td>
 					<td>{{ d.titre }}</td>
 					<td>{{ d.description }}</td>
-					{% if d.etat == 2 	%}
-						<td>
-							Déposer votre document
-							<form method="post" action="{{ path('document_upload', { 'document_id': d.id }) }}" enctype="multipart/form-data">
-								<input type="file" name="file" required>
-								<input type="submit" value="Déposer">
-							</form>
-						</td>
-					{% elseif d.etat == 3 %}
-						<td>
-							Document en cours d'étude
-							<form method="post" action="{{ path('document_upload', { 'document_id': d.id }) }}" enctype="multipart/form-data">
-								<input type="file" name="file" required>
-								<input type="submit" value="Déposer">
-							</form>
-						</td>
-					{% else %}
+					{% if d.etat == 1 %}
 						<td>Télécharger</td>
+					{% elseif d.etat == 2 %}
+						<td>Déposer votre document</td>
 					{% endif %}
-					<td><a class="download-link" href="{{ path('document_download', { 'filename': d.path }) }}" target="_blank">V{{ d.version }}</a></td>
+					<td><a href="{{ path('document_download', { 'filename': d.path }) }}" target="_blank">V{{ d.version }}</a></td>
 					<td>Commenter</td>
 				</tr>
 
@@ -50,20 +36,5 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
-{% endblock %}
-
-{% block javascripts %}
-
-<script>
-	var downloadLinks = document.getElementsByClassName('download-link');
-	[].forEach.call(downloadLinks, function(link) {
-		link.addEventListener("click", function(e) {
-			setTimeout(function() {
-				window.location.reload();
-			}, 1000)
-		}, false);
-	})
-</script>
 
 {% endblock %}
