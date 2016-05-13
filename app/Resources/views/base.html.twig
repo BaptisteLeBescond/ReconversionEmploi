@@ -2,16 +2,121 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %} - Reconversion Emploi </title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
+		
+					<!-- Il y a une Va bar ici mais elle change quand le user est Connecté -->
+					<div class="row">
+						<nav class="navbar">
+								<div class="navbar-header">
+									 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+								
+									 <span class="icon-bar"></span>
+									 <span class="icon-bar"></span>
+									 <span class="icon-bar"></span>
 
-        {% block body %}{% endblock %}
+									 </button>
+								</div>
+								 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+										<div class="container-fluid">
+												<ul class="nav navbar-nav "> 
+													<li class="active"> <a href="#"><span aria-hidden="true"></span> Notre Démarche</a> </li>
+													<li> <a href="#"><span  aria-hidden="true"></span> Les Etapes </a> </li>
+													<li> <a href="#"><span  aria-hidden="true"></span> Témoignages </a> </li>
+													<li> <a href="#"><span  aria-hidden="true"></span> Faq </a> </li>
+													<li> <a href="#"><span  aria-hidden="true"></span> Liens Utiles </a></li>
+													<li> <a href="#"><span  aria-hidden="true"></span> Contacts </a></li>
+
+													
+																									
+													{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+															<li> <a href="{{ path ('fos_user_security_logout') }}" ><span  aria-hidden="true"></span> Déconnexion <span class="badge"> Bonjour {{ app.user.username }}</span> </a></li>
+													{% else %}
+														 	<li> <a href="{{ path ('fos_user_security_login') }}" ><span  aria-hidden="true"></span> Connexion </a></li>
+													{% endif %}
+												</ul>
+										</div>
+								 </div>
+						</nav>   
+					</div>
+					
+					{% if is_granted("ROLE_ADMIN") %}
+
+					<div class="row">
+						<nav  class="navbar" style="background-color: #C12451;">
+						
+								<div class="navbar-header">
+									 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+								
+									 <span class="icon-bar"></span>
+									 <span class="icon-bar"></span>
+									 <span class="icon-bar"></span>
+
+									 </button>
+								</div>
+								 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+										<div class="container-fluid">
+												<ul class="nav navbar-nav "> 
+													<li class="active"> <a href="#" style="color:white"><span aria-hidden="true"></span> Mon accueil</a> </li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Les suivis personnalisés </a> </li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mon agenda </a> </li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Ma messagerie </a> </li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mes notifications  </a></li>
+												</ul>
+										</div>
+								 </div>
+						
+						</nav>   
+					</div>
+
+						{% elseif is_granted("ROLE_SUPER_ADMIN") %}
+
+						<p> Salut petit Admin ! </p>
+
+
+						{% elseif is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+											<div class="row">
+						<nav  class="navbar" style="background-color: #4B7391;">
+						
+								<div class="navbar-header">
+									 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+								
+									 <span class="icon-bar"></span>
+									 <span class="icon-bar"></span>
+									 <span class="icon-bar"></span>
+
+									 </button>
+								</div>
+								 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+										<div class="container-fluid">
+												<ul class="nav navbar-nav "> 
+													<li class="active" > <a href="#" style="color:white"><span aria-hidden="true"></span> Mon accueil</a> </li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Ma bibliothèque</a> </li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mon agenda </a> </li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Ma messagerie </a> </li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mes notifications  </a></li>
+													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mes informations  </a></li>
+												</ul>
+										</div>
+								 </div>
+						
+						</nav>   
+					</div>
+						
+								
+					{% endif %}
+
+					{% block body %}
+
+					
+					{% endblock %}
 
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>

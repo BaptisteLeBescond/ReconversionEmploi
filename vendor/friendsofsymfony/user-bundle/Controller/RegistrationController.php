@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
+use UserBundle\Entity\Conseiller;
 
 /**
  * Controller managing the registration
@@ -57,6 +58,27 @@ class RegistrationController extends Controller
         if ($form->isValid()) {
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+			
+			$em = $this->getDoctrine()->getManager();
+
+			$Users_Role_Conseiller = $em->getRepository('UserBundle:User')->findByRole('ROLE_ADMIN');
+			
+			shuffle($Users_Role_Conseiller);
+		
+		
+			/*		
+				$conseiller = new Conseiller();
+				$conseiller->setNom(current($Users_Role_Conseiller)->getNom());
+				$conseiller->setPrenom(current($Users_Role_Conseiller)->getPrenom());
+				
+		
+		
+		
+			$em->persist(current($Users_Role_Conseiller));
+			$em->flush();
+			
+			*/	
+			$user->setUser(current($Users_Role_Conseiller));
 
             $userManager->updateUser($user);
 

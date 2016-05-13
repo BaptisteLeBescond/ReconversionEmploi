@@ -1,10 +1,132 @@
 {% extends "base.html.twig" %}
 
-{% block title %}
-	Bonjour
-{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 
 {% block body %}
-	Hello {{ user.username }}
+ 
+{% if is_granted("ROLE_ADMIN") %}
+
+<p> Salut petit Conseiller ! </p>
+
+{% elseif is_granted("ROLE_SUPER_ADMIN") %}
+
+<p> Salut petit Admin ! </p>
+
+
+{% elseif is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+<p> Salut petit User ! </p>
+												
+ 
+{% elseif is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
+
+								
+<div class="row">
+	<div class="col-lg-12">
+					<div class="row" style="background-color:#4B7391">
+							
+							<div align="center">
+							</br>
+							 <FONT color="white">
+									<h3> Votre métier se transforme</h3>
+									<h3><b>Devenez acteur de votre mobilité professionnelle</b></h3>
+							 </FONT>
+							</br> </br>
+							
+					
+							</div>
+							<div align="center"><a href="{{ path('fos_user_registration_register') }}" style="background-color:#C12451; border-color:#C12451; color:white" class="btn btn-lg btn-default">INSCRIVEZ-VOUS</a></div>
+							
+							</br></br>
+							</br>
+							
+						
+					</div>
+					</br>
+					<div class="row">
+						<div align="center"><h3><b>Avançons ensemble sur votre projet professionnel.</b></h3></div>
+						</br>
+						<div class="col-lg-offset-3 col-lg-9">
+						
+								<div class="col-lg-3"><h4>Faire le point sur votre parcours</h4></div>
+								<div class="col-lg-3"><h4>Définir le plan d'action</h4></div>
+								<div class="col-lg-3"><h4>Réussir votre transition professionelle</h4></div>
+						
+						</div>
+						
+						</br></br></br></br>
+						
+						<!-- désolée la balise HR veut pas changer de couleur ! -->
+						
+						<div align="center"><p style="color:#C12451">_____________________________________</p></div>
+						</br></br>
+					</div>
+					
+					<div class="row" style="background-color:#C12451">
+					</br>
+							<FONT color="white">
+								<div class="col-lg-offset-1"><h3>Les témoignages</h3></div>	
+							</FONT>	
+							
+							</br>
+							<div class="row">
+								<div class="col-lg-11">
+
+									<div class="col-lg-offset-1 col-lg-5" style="background-color:white">
+										</br>	
+										<img style="float:left; max-width: 59px;" src="http://www.passionnement-furets.com/download/file.php?avatar=3409_1243510378.jpg" width="60" height="60" HSPACE="8">
+										<p>"Après le bac j’ai obtenu un BTS orienté vente et négociation. Je voulais rapidement travailler et gagner ma vie. J’ai trouvé une mission dans un labor" </p>
+							
+										</br>	
+									</div>
+									<div class="col-lg-offset-1 col-lg-5" style="background-color:white">
+										</br>	
+										<img style="float:left; max-width: 59px;" src="http://www.passionnement-furets.com/download/file.php?avatar=3409_1243510378.jpg" width="60" height="60" HSPACE="8">
+										<p>"Après le bac j’ai obtenu un BTS orienté vente et négociation. Je voulais rapidement travailler et gagner ma vie. J’ai trouvé une mission dans un labor" </p>
+							
+										</br>	
+									</div>
+								</div>
+							</div>
+						</br></br>
+							<div class="row"><a href="#" style="background-color:#C12451; border-color:white; color:white" class="btn btn-lg btn-default col-lg-offset-10">autres témoignages</a></div>
+					</br></br>
+					</div>
+					<div class="row" style="background-color:#CECECE">
+										</br>
+								<div class="col-lg-offset-1"><h3>Poser votre question</h3></div>					
+
+								<div class="col-lg-offset-1 col-lg-10">
+								
+								<form>
+								<div class="form-group">
+									<label for="Email">Email</label>
+									<input type="email" class="form-control" id="Email" placeholder="Email">
+								</div>
+								<div class="form-group">
+									<label for="Objet">Objet</label>
+									<textarea class="form-control" rows="4" placeholder="Objet"></textarea>
+								</div>
+								
+								<div align="center"><button  style="background-color:#CECECE; border-color:#4B7391; color:#4B7391" type="submit" class="btn btn-lg btn-default">Envoyer</button></div>
+								</form>
+								
+								
+								
+								</div>
+				 </div>
+					
+					
+	</div>				
+</div>
+
+{% endif %}		
+
+
+
+
+			
 {% endblock %}
+
+

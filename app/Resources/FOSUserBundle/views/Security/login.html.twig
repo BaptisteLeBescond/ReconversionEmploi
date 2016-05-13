@@ -1,0 +1,60 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}Connexion{% endblock %}
+
+
+
+
+
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<div class="row" style="background-color:#C12451"> 
+		</br>
+		</br>
+				<div align="center">
+					<FONT color="white">
+						<h1>Connexion</h1>
+						<h4>Bonjour et bienvenue sur Reconversion Emploi, pour accéder à votre espace sécurisé, nous vous invitions à compléter les éléments suivants</h4>
+					</FONT>
+				</div>
+				</br>
+				</br>
+		</br>
+		</div>
+		</br>
+</div>
+
+
+<div align="center" class="col-lg-offset-3 col-lg-6">
+	<form action="{{ path("fos_user_security_check") }}" method="post">
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+
+		<input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"  placeholder="{{ 'security.login.username'|trans }}" required="required" />
+		</br>
+		<input class="form-control" type="password" id="password" name="_password" placeholder="{{ 'security.login.password'|trans }}" required="required" />
+
+		<!--<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+		<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>-->
+		</br>
+	
+		<input  class="btn btn-lg btn-default" style="background-color:#4B7391; border-color:#4B7391; color:white" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+		</br>
+		<a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a>
+	
+	</br></br>
+	
+	</form>
+	<hr>
+	
+	<h4> Pas encore Inscrit ?<h4>
+	 <br /><br />
+                    <a href="{{ path('fos_user_registration_register') }}"  style="background-color:white; border-color:#4B7391; color:#4B7391" class="btn btn-lg btn-default" >S'inscrire</a>
+</div>
+{% endblock fos_user_content %}

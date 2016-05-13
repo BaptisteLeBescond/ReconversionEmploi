@@ -1,0 +1,26 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+
+{% block fos_user_content %}
+<div class="row" style="background-color:#C12451"> 
+		</br>
+		</br>
+				<div align="center">
+					<FONT color="white">
+						<h1>Mot de passe oublié</h1>
+						<h4>nous vous invitions à compléter les éléments suivants pour retrouver votre mot de passe.</h4>
+					</FONT>
+				</div>
+				</br>
+				</br>
+		</br>
+		</div>
+		</br>
+</div>
+<div align="center" class="col-lg-offset-3 col-lg-6">
+
+{% include "FOSUserBundle:Resetting:request_content.html.twig" %}
+
+</div>
+
+{% endblock fos_user_content %}
