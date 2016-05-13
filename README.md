@@ -9,6 +9,17 @@ Procédure mise en place :
   - php bin/console doctrine:schema:update --force
   - php bin/console fos:user:create
   - http://localhost[:port]/ReconversionEmploi/web/app_dev.php/login
+  
+  
+    Créer un super admin:
+		
+		php bin/console fos:user:create adminuser --super-admin
+
+	Créer un conseiller:
+		
+		php bin/console fos:user:create testuser
+		puis
+		php bin/console fos:user:promote testuser ROLE_ADMIN
 
   Étape 1 :
   ---------
