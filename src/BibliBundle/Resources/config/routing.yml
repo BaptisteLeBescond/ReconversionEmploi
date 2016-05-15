@@ -2,6 +2,10 @@ bibli_homepage:
     path:     /
     defaults: { _controller: BibliBundle:Document:index }
 
+bibli_conseiller_homepage:
+    path:     /{candidat_id}
+    defaults: { _controller: BibliBundle:Document:indexConseiller }
+
 document_download:
     path:    /download/{filename}
     defaults: { _controller: BibliBundle:Document:download }
@@ -9,3 +13,31 @@ document_download:
 document_upload:
     path:    /upload/{document_id}
     defaults: { _controller: BibliBundle:Document:upload }
+
+document_download_conseiller:
+    path:    /download/{candidat_id}/{filename}
+    defaults: { _controller: BibliBundle:Document:downloadConseiller }
+
+document_validate:
+    path:    /validate/{candidat_id}/{document_id}
+    defaults: { _controller: BibliBundle:Document:validate }
+
+document_restore:
+    path:    /restore/{candidat_id}/{document_id}
+    defaults: { _controller: BibliBundle:Document:restore }
+
+commentaires:
+    path:    /commentaires/{document_id}
+    defaults: { _controller: BibliBundle:Commentaire:index }
+
+commentaires_add:
+    path:    /commentaires/ajouter/{document_id}
+    defaults: { _controller: BibliBundle:Commentaire:add }
+
+commentaires_answer:
+    path:    /commentaires/repondre/{document_id}/{commentaire_id}
+    defaults: { _controller: BibliBundle:Commentaire:answer }
+
+commentaires_remove:
+    path:    /commentaires/supprimer/{document_id}/{commentaire_id}
+    defaults: { _controller: BibliBundle:Commentaire:remove }

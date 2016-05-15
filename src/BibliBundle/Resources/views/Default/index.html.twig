@@ -2,6 +2,12 @@
 
 {% block body %}
 
+	{% if message %}
+	<p class="info-message">{{ message }}</p>
+	{% endif %}
+
+	{% if documents %}
+
 	<table>
 		<thead>
 			<th>Rubrique</th>
@@ -13,43 +19,52 @@
 		</thead>
 		<tbody>
 			{% for d in documents %}
-
-				<tr>
-					<td>{{ d.rubrique }}</td>
-					<td>{{ d.titre }}</td>
-					<td>{{ d.description }}</td>
-					{% if d.etat == 2 	%}
-						<td>
-							Déposer votre document
-							<form method="post" action="{{ path('document_upload', { 'document_id': d.id }) }}" enctype="multipart/form-data">
-								<input type="file" name="file" required>
-								<input type="submit" value="Déposer">
-							</form>
-						</td>
-					{% elseif d.etat == 3 %}
-						<td>
-							Document en cours d'étude
-							<form method="post" action="{{ path('document_upload', { 'document_id': d.id }) }}" enctype="multipart/form-data">
-								<input type="file" name="file" required>
-								<input type="submit" value="Déposer">
-							</form>
-						</td>
-					{% else %}
-						<td>Télécharger</td>
-					{% endif %}
-					<td><a class="download-link" href="{{ path('document_download', { 'filename': d.path }) }}" target="_blank">V{{ d.version }}</a></td>
-					<td>Commenter</td>
-				</tr>
-
-			{% else %}
-
-				<tr>
-					<td></td>
-				</tr>
-
+			<tr>
+				<td>{{ d.rubrique }}</td>
+				<td>{{ d.titre }}</td>
+				<td>{{ d.description }}</td>
+				{% if d.etat == 2 	%}
+				<td>
+					Déposer votre document
+					<form method="post" action="{{ path('document_upload', { 'document_id': d.id }) }}" enctype="multipart/form-data">
+						<input type="file" name="file" required>
+						<input type="submit" value="Déposer">
+					</form>
+				</td>
+				{% elseif d.etat == 3 %}
+				<td>
+					Document en cours d'étude
+					<form method="post" action="{{ path('document_upload', { 'document_id': d.id }) }}" enctype="multipart/form-data">
+						<input type="file" name="file" required>
+						<input type="submit" value="Déposer">
+					</form>
+				</td>
+				{% elseif d.etat == 4 %}
+				<td>Document validé</td>
+				{% else %}
+				<td>Télécharger</td>
+				{% endif %}
+				<td><a class="download-link" href="{{ path('document_download', { 'filename': d.path }) }}" target="_blank">V{{ d.version }}</a></td>
+				<td>
+				{% if d.lastCom %}
+					<p>
+						{% if ( d.lastCom.corps|length > 50 ) %}
+						{{ d.lastCom.corps|slice(0, 50) }} <a href="{{ path('commentaires', { 'document_id': d.id }) }}">Suivant</a>
+						{% else %}
+						{{ d.lastCom.corps }}
+						{% endif %}
+					</p>
+				{% endif %}
+					<p><a href="{{ path('commentaires', { 'document_id': d.id }) }}">Commenter</a></p>
+				</td>
+			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+
+	{% else %}
+	<p>Il n'y a pas de documents disponibles.</p>
+	{% endif %}
 
 {% endblock %}
 
@@ -60,7 +75,7 @@
 	[].forEach.call(downloadLinks, function(link) {
 		link.addEventListener("click", function(e) {
 			setTimeout(function() {
-				window.location.reload();
+				window.location.href = "{{ path('bibli_homepage') }}";
 			}, 1000)
 		}, false);
 	})

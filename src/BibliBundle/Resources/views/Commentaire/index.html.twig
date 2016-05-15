@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	{% if message %}
+	<p class="info-message">{{ message }}</p>
+	{% endif %}
+
+	<h2>Commentaires</h2>
+
+	<form action="{{ path('commentaires_add', { 'document_id': document_id }) }}" method="post">
+	    <input type="text" name="corps" />
+	    <input type="submit" />
+	</form>
+
+	<section class="com-list">
+		{% if commentaires %}
+			{% for c in commentaires %}
+				<div>
+					<p>{{ c.corps }}</p>
+					<button class="answer-button">Répondre</button><form class="answer-form" action="{{ path('commentaires_answer', { 'document_id': document_id, 'commentaire_id': c.id }) }}" method="post">
+					    <input type="text" name="corps" />
+					    <input type="submit" />
+					</form>
+				</div>
+				{% if c.enfants %}
+					{% for e in c.enfants %}
+					<p class="child-com">
+						{{ e.corps }}
+					</p>
+					{% endfor %}
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			<p>Aucun commentaire.</p>
+		{% endif %}
+	</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+	
+<script>
+	
+</script>
+
+{% endblock %}
