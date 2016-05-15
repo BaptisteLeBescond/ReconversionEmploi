@@ -1,0 +1,60 @@
+/* Bibli
+========================================================================== */
+
+.details-link {
+	text-align: center;
+}
+
+td {
+	vertical-align: middle !important;
+}
+
+.wrapper-conseiller .btn {
+	background-color: #C12451;
+	color: white;
+	transition: all 0.3s;
+}
+
+.wrapper-conseiller .btn:hover {
+	background-color: white;
+	color: #C12451;
+	border-color: #C12451;
+	transition: all 0.3s;
+}
+
+.wrapper-candidat .btn {
+	background-color: #4B7391;
+	color: white;
+	transition: all 0.3s;
+}
+
+.wrapper-candidat .btn:hover {
+	background-color: white;
+	color: #4B7391;
+	border-color: #4B7391;
+	transition: all 0.3s;
+}
+
+.wrapper-candidat form {
+	padding: 1em;
+}
+
+.wrapper-candidat input[type=submit] {
+	margin-top: 1em;
+}
+
+/* Commentaires
+========================================================================== */
+
+.com-list {
+	padding: 2em;
+}
+
+.child-list {
+	padding-left: 3em;
+}
+
+.answer-form {
+	display: none;
+	margin-bottom: 1em;
+}

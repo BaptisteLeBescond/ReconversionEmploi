@@ -40,7 +40,8 @@ class DocumentController extends Controller
 				array(
 					'documents' => $documents,
 					'message'	=> $message,
-					'candidat' => $candidat_id
+					'candidat' => $candidat_id,
+					'candidatName' => $this->getCandidatName($candidat_id)
 			 	));
 		} else {
 
@@ -48,10 +49,21 @@ class DocumentController extends Controller
 				array(
 					'documents' => array(),
 					'message' => "Vous n'êtes pas autorisé à accéder à cette page.",
-					'candidat' => $candidat_id
+					'candidat' => $candidat_id,
+					'candidatName' => $this->getCandidatName($candidat_id)
 			 )); 
 		}
 	}
+
+	private function getCandidatName($candidat_id) {
+
+    	$em = $this->container->get('doctrine')->getManager();
+    	$candidat = $em->getRepository('UserBundle:User')->findOneBy(
+			array('id' => $candidat_id)
+		);
+
+		return $candidat->getPrenom() . ' ' . $candidat->getNom();
+    }
 
     public function downloadAction($filename) {
 
