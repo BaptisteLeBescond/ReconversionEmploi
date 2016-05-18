@@ -3,6 +3,8 @@
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/fullcalendar.min.css">
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/fullcalendar.print.css ">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/lang/fr.js ">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/agenda.css') }}">
 {% endblock %}
 
 
@@ -33,9 +35,10 @@
             // page is now ready, initialize the calendar...
 
             $('#calendar').fullCalendar({
+                lang: 'fr',
                 header:
                 {
-                    left:   'prev,next today',
+                    left:   'prev,next,today',
                     center: 'title',
                     right:  'month,agendaWeek,agendaDay'
                 },
