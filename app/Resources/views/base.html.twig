@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}{% endblock %} - Reconversion Emploi </title>
-        {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+        {% block stylesheets %}{% endblock %}
     </head>
     <body>
         <div class="container-fluid">
@@ -65,7 +65,7 @@
 												<ul class="nav navbar-nav "> 
 													<li class="active"> <a href="#" style="color:white"><span aria-hidden="true"></span> Mon accueil</a> </li>
 													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Les suivis personnalisés </a> </li>
-													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mon agenda </a> </li>
+													<li> <a href="{{ path ('agenda_homepage') }}" style="color:white"><span  aria-hidden="true"></span> Mon agenda </a> </li>
 													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Ma messagerie </a> </li>
 													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mes notifications  </a></li>
 												</ul>
@@ -99,7 +99,7 @@
 												<ul class="nav navbar-nav "> 
 													<li class="active" > <a href="#" style="color:white"><span aria-hidden="true"></span> Mon accueil</a> </li>
 													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Ma bibliothèque</a> </li>
-													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mon agenda </a> </li>
+													<li> <a href="{{ path ('agenda_homepage') }}" style="color:white"><span  aria-hidden="true"></span> Mon agenda </a> </li>
 													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Ma messagerie </a> </li>
 													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mes notifications  </a></li>
 													<li> <a href="#" style="color:white"><span  aria-hidden="true"></span> Mes informations  </a></li>
