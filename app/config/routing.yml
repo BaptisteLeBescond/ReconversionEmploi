@@ -20,3 +20,7 @@ app:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+agenda:
+    resource: "@AgendaBundle/Resources/config/routing.yml"
+    prefix:   /agenda

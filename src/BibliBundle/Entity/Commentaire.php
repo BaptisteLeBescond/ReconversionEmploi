@@ -24,20 +24,13 @@ class Commentaire
     /**
      * @var string
      *
-     * @ORM\Column(name="sujet", type="string", length=255)
-     */
-    private $sujet;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="corps", type="text")
      */
     private $corps;
 
     /**
-    * @ORM\OneToOne(targetEntity="BibliBundle\Entity\Commentaire")
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\ManyToOne(targetEntity="BibliBundle\Entity\Commentaire")
+    * @ORM\JoinColumn(nullable=true)
     */
     private $commentairePere;
 
@@ -59,6 +52,7 @@ class Commentaire
     */
     private $candidat;
 
+    private $enfants;
 
     /**
      * Get id
@@ -68,30 +62,6 @@ class Commentaire
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set sujet
-     *
-     * @param string $sujet
-     *
-     * @return Commentaire
-     */
-    public function setSujet($sujet)
-    {
-        $this->sujet = $sujet;
-    
-        return $this;
-    }
-
-    /**
-     * Get sujet
-     *
-     * @return string
-     */
-    public function getSujet()
-    {
-        return $this->sujet;
     }
 
     /**
@@ -117,5 +87,112 @@ class Commentaire
     {
         return $this->corps;
     }
-}
 
+    /**
+     * Set commentairePere
+     *
+     * @param \BibliBundle\Entity\Commentaire $commentairePere
+     *
+     * @return Commentaire
+     */
+    public function setCommentairePere(\BibliBundle\Entity\Commentaire $commentairePere = null)
+    {
+        $this->commentairePere = $commentairePere;
+    
+        return $this;
+    }
+
+    /**
+     * Get commentairePere
+     *
+     * @return \BibliBundle\Entity\Commentaire
+     */
+    public function getCommentairePere()
+    {
+        return $this->commentairePere;
+    }
+
+    /**
+     * Set document
+     *
+     * @param \BibliBundle\Entity\Document $document
+     *
+     * @return Commentaire
+     */
+    public function setDocument(\BibliBundle\Entity\Document $document)
+    {
+        $this->document = $document;
+    
+        return $this;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \BibliBundle\Entity\Document
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    /**
+     * Set conseiller
+     *
+     * @param \UserBundle\Entity\User $conseiller
+     *
+     * @return Commentaire
+     */
+    public function setConseiller(\UserBundle\Entity\User $conseiller)
+    {
+        $this->conseiller = $conseiller;
+    
+        return $this;
+    }
+
+    /**
+     * Get conseiller
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getConseiller()
+    {
+        return $this->conseiller;
+    }
+
+    /**
+     * Set candidat
+     *
+     * @param \UserBundle\Entity\User $candidat
+     *
+     * @return Commentaire
+     */
+    public function setCandidat(\UserBundle\Entity\User $candidat)
+    {
+        $this->candidat = $candidat;
+    
+        return $this;
+    }
+
+    /**
+     * Get candidat
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCandidat()
+    {
+        return $this->candidat;
+    }
+
+    public function setEnfants($enfants)
+    {
+        $this->enfants = $enfants;
+    
+        return $this;
+    }
+
+    public function getEnfants()
+    {
+        return $this->enfants;
+    }
+}

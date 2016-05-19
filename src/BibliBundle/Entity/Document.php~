@@ -71,8 +71,6 @@ class Document
      */
     private $path;
 
-    private $lastCom;
-
     /**
      * Get id
      *
@@ -226,40 +224,5 @@ class Document
     {
         return $this->path;
     }
-
-    /**
-     * Set candidat
-     *
-     * @param \UserBundle\Entity\User $candidat
-     *
-     * @return Document
-     */
-    public function setCandidat(\UserBundle\Entity\User $candidat = null)
-    {
-        $this->candidat = $candidat;
-    
-        return $this;
-    }
-
-    /**
-     * Get candidat
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getCandidat()
-    {
-        return $this->candidat;
-    }
-
-    public function setLastCom($lastCom)
-    {
-        $this->lastCom = $lastCom;
-    
-        return $this;
-    }
-
-    public function getLastCom()
-    {
-        return $this->lastCom;
-    }
 }
+

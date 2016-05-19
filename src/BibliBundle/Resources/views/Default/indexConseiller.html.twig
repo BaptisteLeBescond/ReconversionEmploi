@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('css/bibli.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="wrapper-conseiller">
+	{% if message %}
+	<p class="info-message">{{ message }}</p>
+	{% endif %}
+
+	<h2>{{ candidatName }}</h2>
+	<p class="details-link"><a href="" class="btn">Voir la fiche</a></p>
+
+	{% if documents %}
+
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<th>Rubrique</th>
+			<th>Document</th>
+			<th>Version</th>
+			<th>État</th>
+			<th>Commentaire</th>
+			<th>Validation</th>
+			<th>Restaurer</th>
+		</thead>
+		<tbody>
+			{% for d in documents %}
+				<tr>
+					<td>{{ d.rubrique }}</td>
+					<td>{{ d.titre }}</td>
+					<td><a class="download-link" href="{{ path('document_download_conseiller', { 'candidat_id': candidat, 'filename': d.path }) }}" target="_blank">V{{ d.version }}</a></td>
+					{% if d.etat == 2 	%}
+						<td>Déposer votre document</td>
+					{% elseif d.etat == 3 %}
+						<td>Document en cours d'étude</td>
+					{% elseif d.etat == 4 %}
+						<td>Document validé</td>
+					{% else %}
+						<td>Télécharger</td>
+					{% endif %}	
+					<td>
+					{% if d.lastCom %}
+						<p>
+							{% if ( d.lastCom.corps|length > 50 ) %}
+								{{ d.lastCom.corps|slice(0, 50) }} <a href="{{ path('commentaires', { 'document_id': d.id }) }}">Suivant</a>
+							{% else %}
+								{{ d.lastCom.corps }}
+							{% endif %}
+						</p>
+					{% endif %}
+						<a href="{{ path('commentaires', { 'document_id': d.id }) }}">Commenter</a>
+					</td>
+					<td><a class="btn" href="{{ path('document_validate', { 'candidat_id': candidat, 'document_id': d.id }) }}">Valider</a></td>
+					<td><a href="{{ path('document_restore', { 'candidat_id': candidat, 'document_id': d.id }) }}">V0</a></td>
+				</tr>
+
+			{% else %}
+
+				<tr>
+					<td></td>
+				</tr>
+
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+	var downloadLinks = document.getElementsByClassName('download-link');
+	[].forEach.call(downloadLinks, function(link) {
+		link.addEventListener("click", function(e) {
+			setTimeout(function() {
+				window.location.href = "{{ path('bibli_conseiller_homepage', { 'candidat_id': candidat } ) }}";
+			}, 1000)
+		}, false);
+	})
+</script>
+
+{% endblock %}

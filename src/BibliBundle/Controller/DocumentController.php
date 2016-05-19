@@ -6,28 +6,96 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BibliBundle\Entity\Document;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Request;
 
 class DocumentController extends Controller
 {
-    public function indexAction()
-    {
+    public function indexAction($message = null) {
 
-		$documents = $this->getUserDocuments();
+    	if ( !$this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ) {
 
-		return $this->container->get('templating')->renderResponse('BibliBundle:Default:index.html.twig', 
-			array(
-				'documents' => $documents
-		 	));
+    		$documents = $this->getUserDocuments();
+
+			return $this->container->get('templating')->renderResponse('BibliBundle:Default:index.html.twig',
+				array(
+					'documents' => $documents,
+					'message'	=> $message
+			 	));
+    	} else {
+
+    		return $this->container->get('templating')->renderResponse('BibliBundle:Default:index.html.twig',
+				array(
+					'documents' => array(),
+					'message'	=> "Vous devez sélectionner un candidat."
+			 	));
+    	}
     }
 
-    public function downloadAction($filename) 
-    {
-    	//$schema = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
-		//$webBaseDocsPath = $schema . $_SERVER["SERVER_NAME"] . '/ReconversionEmploi/web/documents/originaux/';
+    public function indexConseillerAction($candidat_id, $message = null) {
+
+    	if ( $this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN') && $this->isLinkedCandidate($candidat_id) ) {
+
+			$documents = $this->getUserDocuments($candidat_id);
+
+			return $this->container->get('templating')->renderResponse('BibliBundle:Default:indexConseiller.html.twig', 
+				array(
+					'documents' => $documents,
+					'message'	=> $message,
+					'candidat' => $candidat_id,
+					'candidatName' => $this->getCandidatName($candidat_id)
+			 	));
+		} else {
+
+			return $this->container->get('templating')->renderResponse('BibliBundle:Default:indexConseiller.html.twig', 
+				array(
+					'documents' => array(),
+					'message' => "Vous n'êtes pas autorisé à accéder à cette page.",
+					'candidat' => $candidat_id,
+					'candidatName' => $this->getCandidatName($candidat_id)
+			 )); 
+		}
+	}
+
+	private function getCandidatName($candidat_id) {
+
+    	$em = $this->container->get('doctrine')->getManager();
+    	$candidat = $em->getRepository('UserBundle:User')->findOneBy(
+			array('id' => $candidat_id)
+		);
+
+		return $candidat->getPrenom() . ' ' . $candidat->getNom();
+    }
+
+    public function downloadAction($filename) {
+
+    	$baseDocsPath = $this->getDocsPath();
+		$usersDocsPath = $this->getDocsPath('users');
+
+    	if ( file_exists($usersDocsPath . $filename) )
+	    	$content = file_get_contents($usersDocsPath . $filename);
+	    else
+	    	$content = file_get_contents($baseDocsPath . $filename);
+
+	    $response = new Response();
+	    $response->headers->set(
+           'Content-Type',
+           'application/force-download'
+       	);
+	    $response->headers->set('Content-Disposition', 'filename="' . $filename);
+	    $response->setContent($content);
+
+	    $em = $this->container->get('doctrine')->getManager();
+    	$document = $em->getRepository('BibliBundle:Document')->findOneBy(
+			array('path' => $filename, 'candidat' => $this->getUser())
+		);
+		if ( $document->getEtat() < 2 ) {
+			$document->setEtat(2);
+    		$em->flush();
+		}
+
+	    return $response;
+    }
+
+    public function downloadConseillerAction($candidat_id, $filename) {
 
     	$baseDocsPath = $this->getDocsPath();
 		$usersDocsPath = $this->getDocsPath('users');
@@ -45,9 +113,9 @@ class DocumentController extends Controller
 	    $response->headers->set('Content-Disposition', 'filename="' . $filename);
 	    $response->setContent($content);
 
-	    $em = $this->container->get('doctrine')->getEntityManager();
+	    $em = $this->container->get('doctrine')->getManager();
     	$document = $em->getRepository('BibliBundle:Document')->findOneBy(
-			array('path' => $filename, 'candidat' => $this->getUser())
+			array('path' => $filename, 'candidat' => $candidat_id)
 		);
 		if ( $document->getEtat() < 2 ) {
 			$document->setEtat(2);
@@ -57,15 +125,15 @@ class DocumentController extends Controller
 	    return $response;
     }
 
-    public function uploadAction($document_id)
-    {
-    	if ($_FILES['file']['error'] > 0)
+    public function uploadAction($document_id) {
 
-    		return;
+    	if ($_FILES['file']['error'] > 0 || empty($_FILES) )
+
+			return $this->indexAction("Une erreur est survenue lors de l'envoi du document.");
 
     	else {
 
-    		$em = $this->container->get('doctrine')->getEntityManager();
+    		$em = $this->container->get('doctrine')->getManager();
 	    	$document = $em->getRepository('BibliBundle:Document')->findOneBy(
 				array('id' => $document_id, 'candidat' => $this->getUser())
 			);
@@ -80,30 +148,72 @@ class DocumentController extends Controller
 					$document->setVersion($version += 1);
 					$em->flush();
 
-					return "YEAH";
+					return $this->indexAction("Document envoyé avec succès.");
 				}
-				else {
-					return;
-				}
-
-			} else {
-
-				return;
-			}
+				else
+					return $this->indexAction("Une erreur est survenue lors de l'envoi du document.");
+			} else
+				return $this->indexAction("Une erreur est survenue lors de l'envoi du document.");
     	}
-
-    	return var_dump($_FILES['file']);
     }
 
-    private function getUserDocuments() {
+    public function validateAction($candidat_id, $document_id) {
 
-    	$em = $this->container->get('doctrine')->getEntityManager();
+    	$em = $this->container->get('doctrine')->getManager();
+    	$document = $em->getRepository('BibliBundle:Document')->findOneBy(
+			array('id' => $document_id)
+		);
 
-    	$userId = $this->getUser();
+		if ( $document->getEtat() < 4 ) {
+			$document->setEtat(4);
+    		$em->flush();
+		}
+
+		return $this->indexConseillerAction($candidat_id);
+    }
+
+    public function restoreAction($candidat_id, $document_id) {
+
+    	$em = $this->container->get('doctrine')->getManager();
+    	$candidat = $em->getRepository('UserBundle:User')->findOneBy(
+			array('id' => $candidat_id)
+		);
+    	$document = $em->getRepository('BibliBundle:Document')->findOneBy(
+			array('id' => $document_id)
+		);
+		$baseDocPath = explode('_', $document->getPath());
+    	$baseDocument = $em->getRepository('BibliBundle:Document')->findOneBy(
+			array('path' => $baseDocPath[count($baseDocPath) - 1], 'candidat' => null)
+		);
+
+    	$fs = new Filesystem();
+    	$fs->copy($this->getDocsPath() . $baseDocument->getPath(), $this->getDocsPath('users') . $document->getPath(), true);
+		$document->setEtat(0);
+		$document->setVersion(0);
+		$em->flush();
+
+    	return $this->indexConseillerAction($candidat_id);
+    }
+
+    private function getUserDocuments($candidat_id = null) {
+
+    	$em = $this->container->get('doctrine')->getManager();
+
+    	$userId = is_null($candidat_id) ? $this->getUser() : $candidat_id;
 
 		$userDocuments = $em->getRepository('BibliBundle:Document')->findBy(
 			array('candidat' => $userId)
 		);
+
+		foreach ( $userDocuments as $doc ) {
+
+			$lastCom = $em->getRepository('BibliBundle:Commentaire')->findOneBy(
+				array('document' => $doc), array('id' => 'desc')
+			);
+			
+			if ( !empty($lastCom) )
+				$doc->setLastCom($lastCom);
+		}
 
 		if ( count($userDocuments) == 0 )	{
 
@@ -143,9 +253,20 @@ class DocumentController extends Controller
     }
 
     private function getDocsPath($directory = null) {
+
     	if ( $directory == 'users' )
     		return $_SERVER["DOCUMENT_ROOT"] . 'ReconversionEmploi/web/documents/users/';
     	else
     		return $_SERVER["DOCUMENT_ROOT"] . 'ReconversionEmploi/web/documents/originaux/';
+    }
+
+    private function isLinkedCandidate($candidat_id) {
+
+    	$em = $this->container->get('doctrine')->getManager();
+    	$candidat = $em->getRepository('UserBundle:User')->findOneBy(
+			array('id' => $candidat_id)
+		);
+
+		return $candidat->getUser()->getId() == $this->getUser()->getId();
     }
 }

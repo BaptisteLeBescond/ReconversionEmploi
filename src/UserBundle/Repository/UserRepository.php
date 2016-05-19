@@ -27,5 +27,4 @@ public function findByRole($role)
     return $qb->getQuery()->getResult();
 }
 
-
 }

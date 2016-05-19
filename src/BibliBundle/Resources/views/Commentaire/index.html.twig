@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('css/bibli.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+	{% if message %}
+	<p class="info-message">{{ message }}</p>
+	{% endif %}
+
+	<h2>Commentaires</h2>
+
+	<form action="{{ path('commentaires_add', { 'document_id': document_id }) }}" method="post">
+	    <input type="text" name="corps" class="form-control" /><br>
+	    <input type="submit" class="btn"/>
+	</form>
+
+	<section class="com-list">
+		{% if commentaires %}
+			{% for c in commentaires %}
+				<div>
+					<p>{{ c.corps }}</p>
+					<a class="answer-button">Répondre</a><form class="answer-form" action="{{ path('commentaires_answer', { 'document_id': document_id, 'commentaire_id': c.id }) }}" method="post">
+					    <input type="text" name="corps" class="form-control" />
+					    <input type="submit" class="btn" />
+					</form>
+				</div>
+				{% if c.enfants %}
+				<div class="child-list">
+					<ol>
+					{% for e in c.enfants %}
+						<li class="child-com">
+							{{ e.corps }}
+						</li>
+					{% endfor %}
+					</ol>
+				</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			<p>Aucun commentaire.</p>
+		{% endif %}
+	</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+	var answerLinks = document.getElementsByClassName('answer-button');
+	[].forEach.call(answerLinks, function(link) {
+		link.addEventListener("click", function(e) {
+			var form = this.nextSibling;
+			if ( form.style.display == "block" ) {
+				form.style.display = "none";
+				this.innerHTML = "Répondre";
+			} else {
+				form.style.display = "block";
+				this.innerHTML = "Masquer";
+			}
+		}, false);
+	})
+</script>
+
+{% endblock %}
