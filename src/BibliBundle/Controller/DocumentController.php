@@ -212,6 +212,16 @@ class DocumentController extends Controller
 				array('candidat' => $userId)
 			);
 		} else {
+			
+			foreach ( $userDocuments as $doc ) {
+
+				$lastCom = $em->getRepository('BibliBundle:Commentaire')->findOneBy(
+					array('document' => $doc), array('id' => 'desc')
+				);
+				
+				if ( !empty($lastCom) )
+					$doc->setLastCom($lastCom);
+			}
 
 			foreach ( $userDocuments as $doc ) {
 
@@ -232,6 +242,7 @@ class DocumentController extends Controller
     	$baseDocuments = $em->getRepository('BibliBundle:Document')->findBy(
 			array('candidat' => null)
 		);
+		
 		$baseDocsPath = $this->getDocsPath();
 		$usersDocsPath = $this->getDocsPath('users');
 		$fs = new Filesystem();
