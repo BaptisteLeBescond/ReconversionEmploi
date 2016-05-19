@@ -1,9 +1,7 @@
 <?php
 
 namespace NotificationBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Notification
  *
@@ -20,19 +18,17 @@ class Notification
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-	/**
-	 * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      */    
     private $user;
-	
+    
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
-
     /**
      * @var string
      *
@@ -40,19 +36,24 @@ class Notification
      */
     private $description;
 
-
+    
+    
+       /**
+     * @var boolean
+     *
+     * @ORM\Column(name="statut", type="boolean")
+     */    
+    private $statut;
+    
     /**
      * Get id
      *
      * @return integer
      */
-	 
-	 
     public function getId()
     {
         return $this->id;
     }
-
     /**
      * Set date
      *
@@ -63,12 +64,11 @@ class Notification
     public function setDate($date)
     {
         
-		$this->date = new \Datetime();
+        $this->date = new \Datetime();
   
     
         return $this;
     }
-
     /**
      * Get date
      *
@@ -78,7 +78,6 @@ class Notification
     {
         return $this->date;
     }
-
     /**
      * Set description
      *
@@ -92,7 +91,6 @@ class Notification
     
         return $this;
     }
-
     /**
      * Get description
      *
@@ -102,5 +100,29 @@ class Notification
     {
         return $this->description;
     }
-}
 
+	
+	 /**
+     * Set status
+     *
+     * @param boolean $status
+     *
+     * @return Notification
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+    
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return boolean
+     */
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+}

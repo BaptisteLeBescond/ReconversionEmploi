@@ -1,3 +1,15 @@
+#calendar{
+    margin-top: 20px;
+}
+
 .fc-button-group, .fc-button-group > *{
     display: block !important;
+}
+
+.fc-event-container:hover{
+    cursor: pointer;
+}
+
+a:hover{
+    text-decoration: none;
 }

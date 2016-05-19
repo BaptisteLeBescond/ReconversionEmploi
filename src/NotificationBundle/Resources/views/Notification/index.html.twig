@@ -1,45 +1,93 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Notifications{% endblock %}</title>
-    </head>
-    <body>
-		<div id="content">
-  <header class="header" id="page-header">
-    <div class="content-wrap">
-      <h1 class="image-text home">Reconversion Pro</h1>
-      <nav>
-        <ul>
-          <li class="nav-item"><a class="round-btn" href="#">Notre démarche</a></li>
-          <li class="nav-item"><a class="round-btn" href="#">Les étapes</a></li>
-          <li class="nav-item"><a class="round-btn" href="#">Témoignages</a></li>
-          <li class="nav-item"><a class="round-btn" href="#">FAQ</a></li>
-          <li class="nav-item"><a class="round-btn" href="#">Liens utiles</a></li>
-          <li class="nav-item"><a class="round-btn" href="#">Contact</a></li>
-          <li class="user-action"> <a href="#" class="round-btn fill-btn">Connexion</a> </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <nav class="subnav">
-    <ul class="content-wrap">
-      <li class="accueil ui-state-active"> <a href="#">Mon accueil</a> </li>
-      <li class="library"> <a href="#">Ma bibliothèque</a> </li>
-      <li class="agenda"> <a href="#">Mon agenda</a> </li>
-      <li class="messagerie"> <a href="#">Ma messagerie <i>1</i></a> </li>
-      <li class="notifications"> <a href="#">Mes notifications <i>7</i></a> </li>
-      <li class="personal"> <a href="#">Mes informations</a> </li>
-    </ul>
-  </nav>
-  <main role="main" class="main">
+{% extends "::base.html.twig" %}
 
-  </main>
-  <footer class="footer fixed-footer">
-    <div class="content-wrap clearfix">
-      <p class="ml"> Formation continue  / 2015 <a href="#">Mentions légales</a></p>
-    </div>
-  </footer>
-</div>
-    </body>
-</html>
+{% block title %}Notifications{% endblock %}
+
+{% block stylesheets %}
+		<link type="text/css" href="{{ asset('css/notification.css')}}" rel="stylesheet">
+{% endblock %}
+	
+{% block body %}
+        <table class="table table-border">
+          <tbody>
+           {% for a in notification %}
+                <tr id="{{a.id}}"  class="{% if a.statut==0 %}new {% else %}read{% endif %}" >
+                  <td><input class="checkNotif" value="{{a.id}}" type="checkbox"></td>
+                  <td> jmi </td>
+                  <td> {{ a.description }} </td>
+                  <td class="date"> {{ a.date|date("d-m-Y H:i:s")}}</td>
+                </tr>
+          {% endfor %}
+
+          </tbody>
+        </table>
+        <p>
+          <input class="checkAll" onclick="checkAll()" type="checkbox">
+          <button class="round-btn fill-btn" id='button' onclick="markAsRead()">Marquer comme lu</button>
+  
+        </p>
+     <div id="ajax-notification" style="display:none;"> <a href="#"></a> </div>
+      <div class="list-pagination">
+        <div class="content-wrap">
+          <div class="page-block"> </div>
+        </div>
+      </div>
+      <p class="back-header"><a href="#page-header">Retour en haut de page</a></p>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery.min.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('js/jquery.js')}}"></script>
+  <!-- <script type="text/javascript" src="{{ asset('js/notifications.js')}}"></script> -->
+  <script type="text/javascript">
+      function checkAll()
+      {
+          $('.checkNotif').prop('checked', $('.checkAll').is(':checked'));
+      }
+
+      function markAsRead()
+      {
+          var notifs = [];
+          $('.checkNotif:checked').each(function() {
+              notifs.push($(this).val())
+          });
+          if (notifs.length == 0) {
+              return;
+          }
+        
+        var path = $("#button").attr("data-path");
+          $.ajax({
+             statusCode: {
+                  500: function() {
+                      //@TODO à refacto dans un template twig
+                      $('div.page-content').prepend('<div class="message-block error-message"><p class="alert-error">Erreur interne, l\'action n\'a pas pu être exécutée</p></div>');
+                  }
+              },
+              url: "{{ path('marks_as_read') }}",
+              method: 'POST',
+              data: { data: notifs }
+          
+          })
+          .done(function(response) {  
+
+              for (var i in notifs) {
+            $('tr#'+notifs[i]).addClass('read').removeClass('new');       
+              }
+          
+             $('.checkNotif, .checkAll').prop('checked', false);
+          });
+        
+      }
+
+      {% if countNewNotifications >0 %}
+
+        $(document).ready(function() {
+          var countNotif = document.getElementById("countNotif");
+          countNotif.innerHTML = '{{ countNewNotifications  }}' ;
+        });
+
+      {% endif %}
+
+
+
+  </script>
+{% endblock %}
