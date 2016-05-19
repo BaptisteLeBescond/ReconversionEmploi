@@ -1,3 +1,6 @@
 platform_homepage:
     path:     /
     defaults: { _controller: PlatformBundle:Default:index }
+list_suivi:
+    path:    /Suivi
+    defaults: { _controller: PlatformBundle:Platform:getList }
