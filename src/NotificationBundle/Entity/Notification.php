@@ -29,7 +29,7 @@ class Notification
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
@@ -39,6 +39,17 @@ class Notification
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+	
+	
+	   /**
+     * @var boolean
+     *
+     * @ORM\Column(name="statut", type="boolean")
+     */
+	
+	private $statut;
+	
+	
 
 
     /**
@@ -102,5 +113,31 @@ class Notification
     {
         return $this->description;
     }
+	
+	 /**
+     * Set status
+     *
+     * @param boolean $status
+     *
+     * @return Notification
+     */
+    public function setStatut($statut)
+    {
+        $this->statut = $statut;
+    
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return boolean
+     */
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+	
+	
 }
 
