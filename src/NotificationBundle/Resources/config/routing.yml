@@ -1,3 +1,7 @@
 notification_homepage:
-    path:     /notification
+    path:     /
     defaults: { _controller: NotificationBundle:Notification:index }
+
+marks_as_read:
+    path:    /markAsRead
+    defaults: { _controller: NotificationBundle:Notification:markAsRead }
