@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/colorbox.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/cookiecuttr.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/css.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/select2.css') }}">
+{% endblock %}
+
 {% block body %}
 <!--SOUS MENU-->
 <main role="main" class="main">
@@ -18,10 +26,8 @@
 			<label class="required">Destinataire</label>
 			<select name="destinataire" required="required" class="form-control graphic-select select2-accessible" tabindex="-1" aria-hidden="true">
 			<option value="" selected="selected">Sélectionner un destinataire</option>
-            {% set i=0 %}
-				{% for nom in tabName %}
-						<option value={{ tabId[i] }}>{{ nom }}</option>
-                        {% set i = i+1 %}
+				{% for user in users %}
+						<option value={{ user.id }}>{{ user.username }}</option>
 				{% endfor %}
 			</select>
 		</div>

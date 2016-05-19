@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/colorbox.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/cookiecuttr.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/css.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/select2.css') }}">
+{% endblock %}
+
 {% block javascripts %}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 <script type="text/javascript">

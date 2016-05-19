@@ -44,6 +44,7 @@ class MessageController extends Controller
 			array(
 				'tabId' => $tabId,
 				'tabName' => $tabName,
+        'users' => $users,
 			)
 		);
 	}
