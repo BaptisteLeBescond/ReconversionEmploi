@@ -4,15 +4,3 @@ platform_homepage:
 list_suivi:
     path:    /Suivi
     defaults: { _controller: PlatformBundle:Platform:getList }
-faq:
-    path:    /FAQ
-    defaults: { _controller: PlatformBundle:FAQ:index }
-add_question:
-    path:    /FAQ/add
-    defaults: { _controller: PlatformBundle:FAQ:add_question }
-delete_question:
-    path:    /FAQ/Delete/{id}
-    defaults: { _controller: PlatformBundle:FAQ:delete_question }
-modify_question:
-    path:    /FAQ/modify/{id}
-    defaults: { _controller: PlatformBundle:FAQ:modify_question }
