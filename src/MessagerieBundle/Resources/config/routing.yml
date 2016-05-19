@@ -1,3 +1,15 @@
 messagerie_homepage:
     path:     /
-    defaults: { _controller: MessagerieBundle:Default:index }
+    defaults: { _controller: MessagerieBundle:Message:recu }
+messagerie_form:
+    path:     /form
+    defaults: { _controller: MessagerieBundle:Message:ajouter }
+messagerie_envoiMail:
+    path:     /envoi
+    defaults: { _controller: MessagerieBundle:Message:envoi }
+messagerie_recu:
+    path:     /recu
+    defaults: { _controller: MessagerieBundle:Message:recu }
+messagerie_envoye:
+    path:     /envoye
+    defaults: { _controller: MessagerieBundle:Message:envoye }

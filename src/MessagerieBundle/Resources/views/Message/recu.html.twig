@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script type="text/javascript">
+   $("#messageReponse").hide();
+  
+   function deroule(i){
+        $("#messageReponse").show();
+       var div = document.getElementById('message'+i);
+       var sujet = document.getElementById('sujet'+i);
+       var auteur = document.getElementById('auteur'+i);
+       var idAuteur = document.getElementById('idAuteur'+i);
+       var corps = document.getElementById('corps'+i);
+       var h3 = document.getElementById('h3');
+       var h4 = document.getElementById('h4');
+       var p = document.getElementById('p');
+       var psujet = document.getElementById('reponseSujet');
+       var reponseDestinataire = document.getElementById('reponseDestinataire');
+       var reponseIdAuteur = document.getElementsByName("destinataire")[0];
+       var reponseSujet = document.getElementsByName("sujet")[0];
+       h3.innerHTML = sujet.innerHTML;
+       h4.innerHTML = auteur.innerHTML;
+       p.innerHTML = corps.value;
+       psujet.innerHTML = "Re: "+sujet.innerHTML;
+       reponseDestinataire.innerHTML = auteur.innerHTML;
+       reponseIdAuteur.value = idAuteur.value;
+       reponseSujet.value = "Re: "+sujet.innerHTML;
+   }
+</script>
+{% endblock %}
+{% block body %}
+
+<!--SOUS MENU-->
+<main role="main" class="main">
+<div class="action-messagerie">
+      <ul class="content-wrap">
+        <li class="message-new"><a href="{{ path('messagerie_form')}}">Nouveau message</a></li>
+        <a href="{{ path('messagerie_recu')}}">Boite de réception </a> <a href="{{ path('messagerie_envoye')}}">Messages envoyés</a>
+      </ul>
+    </div>
+<!--FIN SOUS MENU-->
+
+<div class="content-wrap wrap-messagerie" id="message-list-block">
+{% if tabSujet|length > 0 %}
+
+      <table class="table table-hover">
+	  
+	  
+        <tbody> {% set i=0 %}
+		<tr><th>Auteur</th>
+			<th>Sujet</th>
+			</tr>
+                {% for sujet in tabSujet %}
+          <tr  onclick='deroule({{i}})'>
+		 
+                       <div id="message{{i}}" >
+                       <td class="expeditor"><span id="auteur{{i}}">{{ tabAuteur[i] }}</span></td>
+                        <td class="subject"><span id="sujet{{i}}">{{sujet}}</span></td>
+						
+                        <input type='hidden' id="corps{{i}}" value="{{tabCorps[i]}}" />
+                        <input type='hidden' id="idAuteur{{i}}" value={{tabIdAuteur[i]}} />
+                       {% set i = i+1 %}
+                       </div>
+               
+          </tr> {% endfor %}
+        </tbody>
+      </table>
+	  	<div class="list-pagination">
+      <div class="content-wrap">
+        <div class="page-block"> <span class="message-count">{{i}} messages</span> </div>
+      </div>
+    </div>
+	
+	  {% else %}
+	  <h4>Vous n'avez pas de messages</h4>
+	  {% endif %}
+    </div>
+	
+</main>	
+	
+
+
+
+<div id="messageReponse" class="content-wrap message-detail">
+   <h2 id='h3'></h2>
+   <div class="message-meta">
+        <p id='h4'> <b>Coco BELOEIL</b></p>
+   </div>
+   
+   <div id='h4' class="message-content"></div>
+   <p id='p'></p>
+   <div class="message-reply">
+	<h2 id="reponseSujet"></h2>
+   </div>
+   <p id="reponseSujet"></p>
+   
+   
+   <form action="{{ path('messagerie_envoiMail') }}" method="post">
+    <fieldset class="reply-block">
+       <p id="reponseDestinataire" class="reply-to"></p>
+       <input type='hidden' name="destinataire" />
+       <input type='hidden' name="sujet" />
+       <p class="reply-content"><textarea id="reponseCoprs" name="corps" class="form-control visual-editor" placeholder="Contenu du message"></textarea></p>
+	</fieldset>
+        <p class="action">
+		<button type="submit" name="submit" id="submit" class="round-btn fill-btn reply-btn">Répondre</button>
+		</p>
+   </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!--SOUS MENU-->
+<main role="main" class="main">
+<div class="action-messagerie">
+      <ul class="content-wrap">
+        <li class="message-new"><a href="{{ path('messagerie_form')}}">Nouveau message</a></li>
+        <a href="{{ path('messagerie_recu')}}">Boite de réception </a> <a href="{{ path('messagerie_envoye')}}">Messages envoyés</a>
+      </ul>
+    </div>
+<!--FIN SOUS MENU-->
+
+
+<div class="content-wrap wrap-messagerie" id="message-list-block">
+{% if tabSujet|length > 0 %}
+      <table class="table table-hover">
+           {% set i=0 %}
+		   <tr><th>Destinaire</th>
+			<th>Sujet</th>
+			<th>Corps</th>
+			</tr>
+                {% for sujet in tabSujet %}
+                       <tr><div id="message{{i}}" class='col-md-12'>
+                           <td><span id="auteur{{i}}" class='col-md-3'>{{ tabDestinataire[i] }}</span></td>
+                           <td><span id="sujet{{i}}" class='col-md-3'>{{sujet}}</span></td>
+                           <td><span id="corps{{i}}" class='col-md-6'>{{tabCorps[i]}}</span></td>
+                       {% set i = i+1 %}
+                       </div></tr>
+                {% endfor %}
+	</table>
+	
+	
+	<div class="list-pagination">
+      <div class="content-wrap">
+        <div class="page-block"> <span class="message-count">{{i}} messages</span> </div>
+      </div>
+    </div>
+		  {% else %}
+	  <h4>Vous n'avez pas envoyé de message</h4>
+	  {% endif %}
+</div>
+
+{% endblock %}

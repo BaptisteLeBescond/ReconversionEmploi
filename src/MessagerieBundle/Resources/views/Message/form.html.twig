@@ -1,10 +1,46 @@
-<h1>Envoyer Message</h1>
+{% extends 'base.html.twig' %}
 
-{% if message %}
-<p>{{ message }}</p>
-{% endif %}
+{% block body %}
+<!--SOUS MENU-->
+<main role="main" class="main">
+<div class="action-messagerie">
+      <ul class="content-wrap">
+        <li class="message-new"><a href="{{ path('messagerie_form')}}">Nouveau message</a></li>
+        <a href="{{ path('messagerie_recu')}}">Boite de réception </a> <a href="{{ path('messagerie_envoye')}}">Messages envoyés</a>
+      </ul>
+    </div>
+<!--FIN SOUS MENU-->
 
-<form action="" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <input type="submit" />
+<form action="{{ path('messagerie_envoiMail') }}" method="post">
+	 <fieldset class="form-wrap">
+		<h2>Nouveau message</h2><br>
+		<div class="form-block">
+			<label class="required">Destinataire</label>
+			<select name="destinataire" required="required" class="form-control graphic-select select2-accessible" tabindex="-1" aria-hidden="true">
+			<option value="" selected="selected">Sélectionner un destinataire</option>
+            {% set i=0 %}
+				{% for nom in tabName %}
+						<option value={{ tabId[i] }}>{{ nom }}</option>
+                        {% set i = i+1 %}
+				{% endfor %}
+			</select>
+		</div>
+		
+		<div class="form-block">
+            <label class="required">Objet</label>
+            <input type="text" id="project_appli_message_object" name="sujet" required="required" class="form-control" placeholder="Titre du message">
+        </div>
+		<div class="form-block">
+            <label class="required">Message</label>
+            <textarea id="project_appli_message_content" name="corps" required="required" class="form-control" placeholder="Contenu du message"></textarea>
+        </div>
+		
+		
+		
+	
+	 <p class="action main-action"><input type="submit" name="submit" id="submit" value="Envoyer" class="round-btn form-btn"></p>
+		</fieldset>
+
 </form>
+
+{% endblock %}
