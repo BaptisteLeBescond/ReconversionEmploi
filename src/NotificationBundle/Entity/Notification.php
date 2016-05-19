@@ -35,24 +35,21 @@ class Notification
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
     
     
        /**
      * @var boolean
      *
      * @ORM\Column(name="statut", type="boolean")
-     */
-    
+     */    
     private $statut;
-    
     
     /**
      * Get id
      *
      * @return integer
      */
-     
-     
     public function getId()
     {
         return $this->id;
@@ -103,8 +100,9 @@ class Notification
     {
         return $this->description;
     }
-    
-     /**
+
+	
+	 /**
      * Set status
      *
      * @param boolean $status
@@ -117,6 +115,7 @@ class Notification
     
         return $this;
     }
+
     /**
      * Get statut
      *
@@ -126,6 +125,4 @@ class Notification
     {
         return $this->statut;
     }
-    
-    
 }

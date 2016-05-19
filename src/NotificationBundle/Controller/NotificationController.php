@@ -45,9 +45,8 @@ class NotificationController extends Controller
 			 $p=$q->execute();
 		}
 
-  		$new= $em->getRepository('NotificationBundle:Notification')->findBy(
-  																			array('statut' => 0));
-											
+  		$new= $em->getRepository('NotificationBundle:Notification')->findBy(array('statut' => 0));
+
         $countNewNotifications = count($new);
 
 		return $this->redirectToRoute("notification_homepage", array(

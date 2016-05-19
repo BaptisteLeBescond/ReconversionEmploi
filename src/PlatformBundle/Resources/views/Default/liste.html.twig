@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste de vos candidats{% endblock %}
+
+{% block body %}
+
+		{% if is_granted("ROLE_ADMIN") %}
+
+		<p>Afficher le suvi de : </p>
+					{% if candidats %}
+			
+			<ul>	
+			{% for candidat in candidats %}				
+			
+ 						
+ 					<li><a href="{{ path('bibli_conseiller_homepage', { 'candidat_id': candidat.id }) }}">{{ candidat.nom }} {{ candidat.prenom }}</a></li>
+ 			
+			{% endfor %}
+ 			
+ 			</ul>
+ 			{% endif %}
+ 
+ 		{% else %}
+
+			<p> Que faites vous là ? </p>
+ 
+ 
+ 		{% endif %}
+ 
+ {% endblock %}	

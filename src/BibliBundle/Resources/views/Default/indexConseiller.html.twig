@@ -64,7 +64,8 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
+	{% else %}
+	<p>Cet utilisateur n'a pas encore visité sa bibliothèque, ses documents ne sont pas encore crées.</p>
 	{% endif %}
 </div>
 {% endblock %}
