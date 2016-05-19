@@ -1,3 +1,11 @@
 agenda_homepage:
     path:     /
     defaults: { _controller: AgendaBundle:Default:index }
+
+agenda_add:
+    path:     /add/
+    defaults: { _controller: AgendaBundle:Default:add }
+
+agenda_add_conseiller:
+    path:     /add_conseiller/{id}
+    defaults: { _controller: AgendaBundle:Default:addConseiller }

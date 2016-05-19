@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/agenda.css') }}">
+{% endblock %}
+
+{% block title %}
+    Agenda ajout
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Ajout d'évenement</h1>
+        
+
+        <div class="form-group">
+            <form action="" method="post" >
+                {{ form_widget(form) }}
+                <input type="submit" />
+            </form>
+        </div>
+    </div>
+{% endblock %}

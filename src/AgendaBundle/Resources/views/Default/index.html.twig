@@ -13,15 +13,54 @@
 {% endblock %}
 
 {% block body %}
-    <div class="col-md-12">
+    <div class="container">
         <h1>Mon agenda</h1>
+        
+
+        <a href="{{ path('agenda_add') }}">
+            <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="right" title="Ajouter un évenement">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </a>
+        {{message}}
+
+        <div id="calendar"></div>
     </div>
 
     {% for evenement in evenements %}
-        {{evenement.titre}} {{evenement.date | date('Y-m-d')}} {{evenement.description}} <br/><br/>
-    {% endfor %}
+        {{evenement.id}}
+        <div class="modal fade" id="{{evenement.id}}" tabindex="-1" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{evenement.titre}}</h4>
+              </div>
+              <div class="modal-body">
+                <p>{{evenement.description}}</p>
+              </div>
+              <div class="modal-footer">
+                {% if app.user and not is_granted("ROLE_ADMIN") %}
+                    <a href="{{ path('agenda_add_conseiller', {'id': evenement.id}) }}">
+                        <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Inviter votre conseiller">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </button>
+                    </a>
 
-    <div id="calendar"></div>
+                {% elseif app.user and is_granted("ROLE_ADMIN") %}
+                    <a href="{{ path('agenda_add') }}">
+                        <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Inviter un utilisateur">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </button>
+                    </a>
+                {% endif %}
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                {# <button type="button" class="btn btn-primary">Save changes</button> #}
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    {% endfor %}
 {% endblock %}
 
 {% block javascripts %}
@@ -32,8 +71,6 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-            // page is now ready, initialize the calendar...
-
             $('#calendar').fullCalendar({
                 lang: 'fr',
                 header:
@@ -42,17 +79,27 @@
                     center: 'title',
                     right:  'month,agendaWeek,agendaDay'
                 },
-                events: [
-                    {% for evenement in evenements %}
-                        {
-                            title: '{{evenement.titre}}',
-                            start: new Date({{evenement.date | date('Y')}}, {{evenement.date | date('m')}}-1, {{evenement.date | date('d')}})
-                        },
-                    {% endfor %}
-                ]
+                eventAfterRender:function( event, element, view ) {
+                    $(element).attr("data-target","#"+event._id);
+                    $(element).attr("data-toggle", "modal");
+                },
+                
             });
-            // $('#calendar').fullCalendar('next');
+
+            {% for evenement in evenements %}
+                var event = {id: {{evenement.id}}, title:'{{evenement.titre}}', start: new Date({{evenement.date | date('Y')}}, {{evenement.date | date('m')}}-1, {{evenement.date | date('d')}})};
+
+                $('#calendar').fullCalendar('renderEvent', event, true);
+
+            {% endfor %}
 
         });
+
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+
     </script>
+
+
 {% endblock %}
