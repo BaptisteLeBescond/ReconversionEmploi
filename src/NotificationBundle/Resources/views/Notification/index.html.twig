@@ -7,6 +7,7 @@
 {% endblock %}
 	
 {% block body %}
+  <div class="container">
         <table class="table table-border">
           <tbody>
            {% for a in notification %}
@@ -23,7 +24,7 @@
         <p>
           <input class="checkAll" onclick="checkAll()" type="checkbox">
           <button class="round-btn fill-btn" id='button' onclick="markAsRead()">Marquer comme lu</button>
-  
+
         </p>
      <div id="ajax-notification" style="display:none;"> <a href="#"></a> </div>
       <div class="list-pagination">
@@ -32,6 +33,7 @@
         </div>
       </div>
       <p class="back-header"><a href="#page-header">Retour en haut de page</a></p>
+  </div>
 {% endblock %}
 
 {% block javascripts %}
